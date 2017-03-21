@@ -26,13 +26,15 @@ class FavoriteCookingClasses::CookingClass
     end
     @@all
   end
-    def description
+  
+  def description
     if @description.nil?
       class_details = Nokogiri::HTML(open(@@base_url + "#{self.url}"))
       @description = class_details.css("div.boxsides").children[6].text
     end
     @description
   end
+  
   def menu
     if @menu.nil?
       class_details = Nokogiri::HTML(open(@@base_url + "#{self.url}"))
@@ -40,4 +42,5 @@ class FavoriteCookingClasses::CookingClass
     end
     @menu
   end
+  
 end
