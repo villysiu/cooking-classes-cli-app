@@ -1,8 +1,10 @@
 class FavoriteCookingClasses::CLI
+  
   def call
     list_favorite_classes
     menu
   end
+  
   def list_favorite_classes
     puts ""
     puts "**************** Sur La Table ****************"
@@ -10,6 +12,7 @@ class FavoriteCookingClasses::CLI
     puts ""
     FavoriteCookingClasses::CookingClass.all.each_with_index { |the_class, i| puts "#{i+1}. #{the_class.name}" }
   end
+  
   def menu
     input = nil
     while input != "exit"
@@ -28,6 +31,7 @@ class FavoriteCookingClasses::CLI
       end
     end
   end
+  
   def list_class_details(i)
     favorite_class = FavoriteCookingClasses::CookingClass.all[i-1]
     puts "********* #{i}. #{favorite_class.name} *********"
@@ -38,7 +42,9 @@ class FavoriteCookingClasses::CLI
     puts favorite_class.menu
     puts " "
   end
+  
   def goodbye
     puts "Goodbye"
   end
+  
 end
