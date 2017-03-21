@@ -1,4 +1,5 @@
 class FavoriteCookingClasses::CookingClass
+  attr_accessor :name, :url, :description, :menu
   @@all = []
   @@base_url = "http://www.surlatable.com/"
   
