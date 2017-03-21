@@ -1,5 +1,6 @@
 class FavoriteCookingClasses::CookingClass
   @@all = []
+  @@base_url = "http://www.surlatable.com/"
   def initialize(name = nil, url = nil, description = nil, menu = nil)
     @name = name
     @url = url
@@ -9,11 +10,7 @@ class FavoriteCookingClasses::CookingClass
   end
   
   def self.scrape_customer_favorites
-
-  #  html = open("http://www.surlatable.com/category/cat2211278/Find+a+Cooking+Class")
-    base_url = "http://www.surlatable.com/"
-    doc = Nokogiri::HTML(open(base_url + "category/cat2211278/Find+a+Cooking+Class"))
-
+    doc = Nokogiri::HTML(open(@@base_url + "category/cat2211278/Find+a+Cooking+Class"))
     customer_favorites = doc.css("div.boxsides").first
 
     customer_favorites.css("div.product a").each_with_index do |the_class, i|
@@ -22,5 +19,13 @@ class FavoriteCookingClasses::CookingClass
       favorite_class.url = the_class['href']
     end
     @@all
+  end
+  def description
+    class_details = Nokogiri::HTML(open(@@base_url + "#{self.url}"))
+    @description.nil? ? @description = class_details.css("div.boxsides").children[6].text : @description
+  end
+  def menu
+    class_details = Nokogiri::HTML(open(@@base_url + "#{self.url}"))
+    @menu.nil? ? @menu = class_details.css("div.boxsides").children[2].text : @menu
   end
 end
