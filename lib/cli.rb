@@ -19,21 +19,24 @@ class FavoriteCookingClasses::CLI
       input = gets.strip.downcase
       if input == "list"
         list_favorite_classes
-      elsif input.to_i > 0 && input.to_i <= FavoriteCookingClasses::CookingClass.all.size
-        favorite_class = FavoriteCookingClasses::CookingClass.find_class(input.to_i)
-        puts "********* #{input}. #{favorite_class.name} *********"
-        puts "Description:"
-        puts favorite_class.description
-        puts " "
-        puts "Menu:"
-        puts favorite_class.menu
-        puts " "
+      elsif input.to_i.between?(1, FavoriteCookingClasses::CookingClass.all.size)
+        list_class_details(input.to_i)
       elsif input == "exit"
         goodbye
       else
         puts "This is not a valid class. Try again."
       end
     end
+  end
+  def list_class_details(i)
+    favorite_class = FavoriteCookingClasses::CookingClass.all[i-1]
+    puts "********* #{i}. #{favorite_class.name} *********"
+    puts "Description:"
+    puts favorite_class.description
+    puts " "
+    puts "Menu:"
+    puts favorite_class.menu
+    puts " "
   end
   def goodbye
     puts "Goodbye"
